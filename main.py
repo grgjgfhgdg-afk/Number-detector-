@@ -22,7 +22,7 @@ def send_welcome(message):
     )
     
     markup = InlineKeyboardMarkup()
-    support_button = InlineKeyboardButton(text="👨‍💻 الدعم الفني", url="https://t.me")
+    support_button = InlineKeyboardButton(text="👨‍💻 الدعم الفني", url="h+967783877639")
     markup.add(support_button)
     
     bot.send_message(message.chat.id, welcome_text, reply_markup=markup)
@@ -38,7 +38,8 @@ def check_number(message):
 
     bot.reply_to(message, "جاري فحص الرقم... ⏳")
 
-    api_url = f"http://apilayer.net{NUMVERIFY_KEY}&number={phone_number}"
+    # تعديل الرابط إلى https المشفر والآمن لحل مشكلة الاتصال بالخادم
+    api_url = f"https://apilayer.net{NUMVERIFY_KEY}&number={phone_number}"
 
     try:
         response = requests.get(api_url, timeout=10)
@@ -76,10 +77,11 @@ def getMessage():
 @app.route("/")
 def webhook():
     bot.remove_webhook()
-    # سيتم استبدال RENDER_EXTERNAL_URL تلقائياً برابط السيرفر عند الرفع
     render_url = os.environ.get("RENDER_EXTERNAL_URL")
     if render_url:
-        bot.set_webhook(url=render_url + '/' + TELEGRAM_TOKEN)
+        # تأكيد استخدام الرابط الآمن في الويب هوك أيضاً
+        secure_url = render_url.replace("http://", "https://")
+        bot.set_webhook(url=secure_url + '/' + TELEGRAM_TOKEN)
         return "تم ربط الويب هوك بنجاح!", 200
     return "سيرفر البوت يعمل، بانتظار إعداد الرابط الخارجي.", 200
 
